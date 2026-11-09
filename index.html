@@ -1129,7 +1129,11 @@
       if (i % 2 === 1) {
         out += '<pre class="code"><code>' + esc(part.replace(/\n$/, '')) + '</code></pre>';
       } else {
-        out += esc(part)
+        // コードブロックのすぐ前後の改行は、ブロック自体が改行するので落とす
+        let t = part;
+        if (i > 0) t = t.replace(/^\n/, '');
+        if (i < parts.length - 1) t = t.replace(/\n$/, '');
+        out += esc(t)
           .replace(/`([^`\n]+)`/g, '<code>$1</code>')
           .replace(/\n/g, '<br>');
       }
